@@ -14,9 +14,12 @@ const sign = (v: string) => createHmac('sha256', secret()).update(v).digest('hex
 export function makeSession(userId: string) { return `${userId}.${sign(userId)}`; }
 export const SESSION_COOKIE = COOKIE;
 
-export const CLERK = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+// TEST MODE: NEXT_PUBLIC_DISABLE_AUTH=1 turns sign-in off. Everyone shares one 'demo' user. Never use with real customers.
+export const OPEN = process.env.NEXT_PUBLIC_DISABLE_AUTH === '1';
+export const CLERK = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && !OPEN;
 
 export async function getUserId(): Promise<string | null> {
+  if (OPEN) return 'demo';
   if (CLERK) { const { auth } = await import('@clerk/nextjs/server'); return (await auth()).userId ?? null; }
   const raw = (await cookies()).get(COOKIE)?.value;
   if (!raw) return null;

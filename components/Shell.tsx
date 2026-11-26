@@ -17,7 +17,8 @@ const NAV = [['World markets', '/markets', 'map'], ['Heatmap', '/heatmap', 'heat
 import { useClerk } from '@clerk/nextjs';
 import AlertRunner from './AlertRunner';
 import { getVoice, setVoice, speak, supported } from '@/lib/voice';
-const CLERK = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const OPEN = process.env.NEXT_PUBLIC_DISABLE_AUTH === '1';
+const CLERK = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && !OPEN;
 function ClerkOut() { const { signOut } = useClerk(); return <button type="button" className="btn mu" style={{ border: 0 }} onClick={() => signOut({ redirectUrl: '/signin' })}>Sign out</button>; }
 export default function Shell({ title, sub, chip, children }: { title: string; sub?: string; chip?: ReactNode; children: ReactNode }) {
   const path = usePathname(); const router = useRouter();
@@ -37,7 +38,7 @@ export default function Shell({ title, sub, chip, children }: { title: string; s
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 8 }}>
           {sup && <button type="button" className="btn" aria-pressed={vOn} onClick={() => { const n = !vOn; setVoice({ on: n }); if (n) speak('Voice alerts are on.', true); }}>{vOn ? 'Voice alerts: on' : 'Voice alerts: off'}</button>}
           <button type="button" className="btn" aria-pressed={dark} onClick={toggle}>{dark ? 'Switch to light mode' : 'Switch to dark mode'}</button>
-          {CLERK ? <ClerkOut /> : <button type="button" className="btn mu" style={{ border: 0 }} onClick={out}>Sign out</button>}
+          {OPEN ? <span className="mu" style={{ fontSize: 12 }}>Test mode</span> : CLERK ? <ClerkOut /> : <button type="button" className="btn mu" style={{ border: 0 }} onClick={out}>Sign out</button>}
         </div>
       </aside>
       <AlertRunner />

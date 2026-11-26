@@ -16,5 +16,11 @@ function dev(req: NextRequest) {
   if (has && p === '/') return NextResponse.redirect(new URL('/markets', req.url));
   return NextResponse.next();
 }
-export default process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? clerk : dev;
+// Test mode: no sign-in at all.
+function open(req: NextRequest) {
+  const p = req.nextUrl.pathname;
+  if (p === '/' || p.startsWith('/signin')) return NextResponse.redirect(new URL('/markets', req.url));
+  return NextResponse.next();
+}
+export default process.env.NEXT_PUBLIC_DISABLE_AUTH === '1' ? open : process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? clerk : dev;
 export const config = { matcher: ['/((?!_next|.*\\..*).*)', '/(api|trpc)(.*)'] };

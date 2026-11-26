@@ -1,0 +1,4 @@
+{
+  "framework": "nextjs",
+  "build": { "env": { "NEXT_PUBLIC_DISABLE_AUTH": "1" } }
+}

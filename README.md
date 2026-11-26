@@ -1,6 +1,6 @@
 # Cashew Global Markets
 
-this is a 360 degree app for the investment team
+Next.js port of the original market-heatmap app, built for hosting with per-user data.
 
 ## Run locally
     npm install
