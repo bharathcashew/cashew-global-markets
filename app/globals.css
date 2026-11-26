@@ -1,9 +1,9 @@
 
 body{margin:0}
-html{--bg:#F4F6F9;--rail:#FFFFFF;--card:#FFFFFF;--line:#DDE2E8;--ink:#161B22;--sub:#3F4A59;--mute:#5F6B7A;--up:#0F7B4B;--dn:#B3261E;--ac:#1F5FBF;--acT:#FFFFFF;--navOn:#E6EEFB;--navOnT:#1F5FBF;--in:#FFFFFF;--chip:#EEF1F5;--ai:#6D28D9;--warn:#8A5A00;--ocean:#E8EEF4;--land:#D3DBE4;--landL:#B9C4D1;--night:#1B2A44;--nightO:0.10;--g2:#1A7F52;--g1:#2A6B4C;--n0:#5F6B7A;--r1:#8E3B3B;--r2:#C0392B}
+html{--bg:#F4F6F9;--rail:#FFFFFF;--card:#FFFFFF;--line:#DDE2E8;--ink:#161B22;--sub:#3F4A59;--mute:#5F6B7A;--up:#0F7B4B;--dn:#B3261E;--ac:#1F5FBF;--acT:#FFFFFF;--navOn:#E6EEFB;--navOnT:#1F5FBF;--in:#FFFFFF;--chip:#EEF1F5;--ai:#6D28D9;--warn:#8A5A00;--ocean:#E8EEF4;--seaA:#DCEBF7;--seaB:#C4DAEE;--landA:#F6F8FB;--landB:#E3E9F0;--grat:rgba(31,95,191,.12);--halo:#FFFFFF;--land:#D3DBE4;--landL:#B9C4D1;--night:#1B2A44;--nightO:0.10;--g2:#1A7F52;--g1:#2A6B4C;--n0:#5F6B7A;--r1:#8E3B3B;--r2:#C0392B}
 body{background:var(--bg);color:var(--ink);font:14px Inter,system-ui,sans-serif}
 .shell{display:flex;flex-wrap:wrap;align-items:stretch;min-height:100vh}
-html[data-theme=dark]{--bg:#0D0F12;--rail:#111418;--card:#14171B;--line:#23282F;--ink:#E8ECF1;--sub:#C5CDD8;--mute:#8A95A3;--up:#4ADE80;--dn:#F87171;--ac:#5B9BFF;--acT:#0D0F12;--navOn:#14233F;--navOnT:#7FB0FF;--in:#0D0F12;--chip:#1C2127;--ai:#7C3AED;--warn:#FBBF24;--ocean:#0B1015;--land:#1B2430;--landL:#2B3848;--night:#000000;--nightO:0.38;--n0:#343A42}
+html[data-theme=dark]{--bg:#0D0F12;--rail:#111418;--card:#14171B;--line:#23282F;--ink:#E8ECF1;--sub:#C5CDD8;--mute:#8A95A3;--up:#4ADE80;--dn:#F87171;--ac:#5B9BFF;--acT:#0D0F12;--navOn:#14233F;--navOnT:#7FB0FF;--in:#0D0F12;--chip:#1C2127;--ai:#7C3AED;--warn:#FBBF24;--ocean:#0B1015;--seaA:#0E1B2E;--seaB:#09111C;--landA:#26364D;--landB:#1B2738;--grat:rgba(127,176,255,.10);--halo:#0D0F12;--land:#1B2430;--landL:#2B3848;--night:#000000;--nightO:0.38;--n0:#343A42}
 *{box-sizing:border-box}
 h1,h2,h3,p{margin:0}
 a{color:var(--sub)}
@@ -64,3 +64,5 @@ html[data-theme=dark] .main>header h1{background:linear-gradient(90deg,var(--ink
 .brand .mark{filter:none}
 .chip{background:color-mix(in srgb,var(--c) 6%,transparent)}
 .authbg{background:radial-gradient(800px 500px at 15% 10%,rgba(37,99,235,.18),transparent),radial-gradient(700px 500px at 90% 20%,rgba(219,39,119,.15),transparent),radial-gradient(800px 600px at 50% 100%,rgba(13,148,136,.16),transparent),var(--bg)}
+
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 2.4s ease-out infinite}@keyframes pulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.6);opacity:0}}@media (prefers-reduced-motion:reduce){.pulse{animation:none;opacity:0}}
