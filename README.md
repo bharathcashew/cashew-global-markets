@@ -2,6 +2,18 @@
 
 Next.js port of the original market-heatmap app, built for hosting with per-user data.
 
+## Screenshots
+
+Sample data, test mode.
+
+![World markets](docs/screenshots/markets.png)
+![Heatmap](docs/screenshots/heatmap.png)
+![Portfolio](docs/screenshots/portfolio.png)
+![Trade journal](docs/screenshots/journal.png)
+![Market analysis](docs/screenshots/analysis.png)
+![Alerts and live TV](docs/screenshots/alerts.png)
+![World markets, dark mode](docs/screenshots/markets-dark.png)
+
 ## Run locally
     npm install
     cp .env.example .env.local
@@ -34,3 +46,9 @@ Open http://localhost:3000 and use the development login.
 
 ## Legal pages
 `/terms` and `/privacy` are public. Fill in the company name, contact email, governing law and effective date once in `lib/legal.ts`, replace the `[DATA PROVIDER]` line in the privacy page, and have a lawyer review the text before launch.
+
+## Insider tape, Macro and Risk
+
+- **Insider tape** reads the latest SEC Form 4 filings from EDGAR (free). Set `SEC_USER_AGENT` to your app name and a real contact email, which the SEC requires. Results are cached 15 minutes.
+- **Macro** reads public FRED CSV downloads (free, no key). Cached one hour.
+- **Risk** needs daily price history. The sample provider generates synthetic history and is labeled Sample data. Implement `history()` in `lib/provider.ts` for real numbers.

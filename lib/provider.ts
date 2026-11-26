@@ -7,7 +7,9 @@
 export type Quote = { symbol: string; price: number; change: number; pct: number; dayHigh: number; dayLow: number; volume: number };
 export type CryptoRow = { symbol: string; price: number; pct: number; marketCap: number; volume: number; dayHigh: number; dayLow: number; low52: number; high52: number };
 export type Vol = { vix: number; vix3m: number; vvix: number; skew: number; rv20: number; spx: number; callWall: number; gammaFlip: number; putWall: number };
-export interface MarketData { name: string; licensed: boolean; quotes(symbols: string[]): Promise<Quote[]>; crypto(): Promise<CryptoRow[]>; markets(): Promise<{ name: string; pct: number }[]>; vol(): Promise<Vol>; }
+export interface MarketData { name: string; licensed: boolean; quotes(symbols: string[]): Promise<Quote[]>; crypto(): Promise<CryptoRow[]>; markets(): Promise<{ name: string; pct: number }[]>; vol(): Promise<Vol>;
+  /** Daily closing prices, oldest first, same length for every symbol. Needed for the Risk page. */
+  history(symbols: string[], days: number): Promise<Record<string, number[]>>; }
 
 const h = (s: string) => { let x = 2166136261; for (const c of s) { x ^= c.charCodeAt(0); x = Math.imul(x, 16777619); } return (x >>> 0) / 4294967295; };
 const day = () => new Date().toISOString().slice(0, 10);
@@ -26,6 +28,17 @@ const sample: MarketData = {
     return c.map(([symbol, price, marketCap, volume, dayHigh, dayLow, low52]) => ({ symbol, price, pct: +((h(symbol + day()) - 0.6) * 5).toFixed(2), marketCap, volume, dayHigh, dayLow, low52, high52: price * 1.8 }));
   },
   async markets() { return ['NYSE · Nasdaq', 'TSX', 'B3', 'LSE', 'Xetra', 'JSE', 'Tadawul', 'NSE', 'SSE', 'HKEX', 'TSE', 'ASX'].map(name => ({ name, pct: +((h(name + day()) - 0.5) * 2).toFixed(2) })); },
+  // Synthetic prices: one shared market factor plus a per-symbol factor, so beta and correlation look plausible. Not real data.
+  async history(symbols, days) {
+    const rnd = (seed: string, i: number) => h(seed + i) - 0.5;
+    const out: Record<string, number[]> = {};
+    for (const s of symbols) {
+      const beta = 0.6 + h(s + 'b') * 1.1, idio = 0.006 + h(s + 'i') * 0.012; let p = 20 + h(s) * 600; const a: number[] = [];
+      for (let i = 0; i < days; i++) { p *= 1 + beta * rnd('mkt', i) * 0.026 + idio * rnd(s, i) * 2 + 0.0004; a.push(+p.toFixed(2)); }
+      out[s] = a;
+    }
+    return out;
+  },
   async vol() { return { vix: 16.8, vix3m: 18.9, vvix: 92.4, skew: 138, rv20: 11.9, spx: 7774, callWall: 7800, gammaFlip: 7745, putWall: 7650 }; },
 };
 export function getProvider(): MarketData {
