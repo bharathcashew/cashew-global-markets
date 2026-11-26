@@ -1,0 +1,27 @@
+{
+  "name": "cashew-global-markets",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.88.0",
+    "@clerk/nextjs": "^6.39.9",
+    "fast-xml-parser": "^5.12.1",
+    "next": "^15.5.29",
+    "pg": "^8.13.1",
+    "react": "~19.1.4",
+    "react-dom": "~19.1.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/pg": "^8.11.10",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5.7.2"
+  }
+}
